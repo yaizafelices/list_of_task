@@ -15,6 +15,7 @@ function App() {
 
   const [searchTask, setSearchTask] = useState('');
 
+
   const handleDone = (event) =>{
     const clickedDoneId = event.currentTarget.id;
     const foundTaskDone = tasks.find((tasks) => tasks.id === clickedDoneId);
@@ -48,6 +49,15 @@ function App() {
     })
   }
 
+  const lengthTotalTasks = tasks.length;
+  let lenghtCompletedTasks = tasks.filter(function(element, index){
+    return element.completed === true;
+  }).length;
+  let lenghtIncompletedTasks = tasks.filter(function(element, index){
+    return element.completed === false;
+  }).length;
+
+
 
 
   return (
@@ -55,9 +65,15 @@ function App() {
       <h1>Mi lista de tareas</h1>
       <ol>{renderTasks()}</ol>
       <form>
-        <label htmlFor='searchTask'>Buscar por palabra</label>
+        <label htmlFor='searchTask' className='label'>Buscar por palabra:</label>
         <input className='input' type='text' id='searchTask' value={searchTask} onChange={handleSearchTask}></input>
       </form>
+      <ul>
+        <li>Tareas totales: {lengthTotalTasks}</li>
+        <li>Tareas completadas: {lenghtCompletedTasks}</li>
+        <li>Tareas pendientes: {lenghtIncompletedTasks}</li>
+        </ul>
+
     </div>
   );
 }
