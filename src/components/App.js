@@ -13,6 +13,8 @@ function App() {
     }
   ]);
 
+  const [searchTask, setSearchTask] = useState('');
+
   const handleDone = (event) =>{
     const clickedDoneId = event.currentTarget.id;
     const foundTaskDone = tasks.find((tasks) => tasks.id === clickedDoneId);
@@ -20,8 +22,18 @@ function App() {
     setTasks([...tasks]);
   }
 
+  const handleSearchTask = (event) => {
+    setSearchTask(event.target.value);
+  }
+
   const renderTasks = () => {
-    return tasks.map((tasks) => {
+    return tasks
+    .filter((tasks) => {
+      return tasks.task.toLowerCase().includes(searchTask.toLowerCase());
+    })
+    
+    
+    .map((tasks) => {
       let highLight = null;
       if (tasks.completed === true){
         highLight = 'coloredHighLight';
@@ -42,6 +54,10 @@ function App() {
     <div>
       <h1>Mi lista de tareas</h1>
       <ol>{renderTasks()}</ol>
+      <form>
+        <label htmlFor='searchTask'>Buscar por palabra</label>
+        <input className='input' type='text' id='searchTask' value={searchTask} onChange={handleSearchTask}></input>
+      </form>
     </div>
   );
 }
